@@ -1,9 +1,12 @@
 import Vue from 'vue';
 
 import Login from './Login';
+import Logout from './Logout';
+
+import './styles.css';
 
 new Vue({
-  components: { Login },
+  components: { Login, Logout },
   el: '#app',
-  template: '<Login/>'
+  template: '<Logout/>'
 });
