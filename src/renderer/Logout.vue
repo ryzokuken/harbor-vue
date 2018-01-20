@@ -7,9 +7,7 @@
 <script>
 export default {
   methods: {
-    clickHandler: function() {
-      this.$emit('logout');
-    }
+    clickHandler: function() { this.$emit('logout') }
   }
 }
 </script>
