@@ -1,12 +1,15 @@
 'use strict';
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import Cyberoam from 'cyberoam';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const cyberoam = new Cyberoam();
 
 // Global reference to mainWindow
 // Necessary to prevent win from being garbage collected
 let mainWindow;
+let liveInterval;
 
 function createMainWindow() {
   // Construct new BrowserWindow
@@ -56,3 +59,25 @@ app.on('activate', () => {
 app.on('ready', () => {
   mainWindow = createMainWindow();
 });
+
+function login(username, password) {
+  cyberoam
+    .login(username, password)
+    .then(() => {
+      liveInterval = setInterval(() => {
+        live(username, () => {
+          login(username, password);
+        });
+      }, 180 * 1000);
+      mainWindow.webContents.send('logged-in', username);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+function live(username, callback) {
+  cyberoam.checkLiveStatus(username).catch(callback);
+}
+
+ipcMain.on('login', (event, { username, password }) => login(username, password));

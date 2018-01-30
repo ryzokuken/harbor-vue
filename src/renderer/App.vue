@@ -1,5 +1,5 @@
 <template>
-  <Logout v-if="isLoggedIn" @logout="logoutHandler"/>
+  <Logout v-if="isLoggedIn" :username="username" @logout="logoutHandler"/>
   <Login v-else @login="loginHandler"/>
 </template>
 
@@ -10,9 +10,9 @@ import Logout from './Logout';
 
 export default {
   components: { Login, Logout },
-  props: [ 'isLoggedIn' ],
+  props: [ 'isLoggedIn', 'username' ],
   methods: {
-    loginHandler: function() { this.$emit('login') },
+    loginHandler: function(data) { this.$emit('login', data) },
     logoutHandler: function() { this.$emit('logout') },
   }
 }
