@@ -1,25 +1,18 @@
 import Vue from 'vue';
 
-import Login from './Login';
-import Logout from './Logout';
+import App from './App';
 
 import './styles.css';
 
-const template = `
-  <Logout v-if="isLoggedIn" @logout="logoutHandler"/>
-  <Login v-else @login="loginHandler"/>
-`;
+const template =
+  '<App :isLoggedIn="isLoggedIn" @login="loginHandler" @logout="logoutHandler"/>';
 
 new Vue({
-  components: {
-    Login,
-    Logout
-  },
+  components: { App },
   el: '#app',
-  template: template,
+  template,
   data: {
-    isLoggedIn: false,
-    text: 'Hello, World!'
+    isLoggedIn: false
   },
   methods: {
     loginHandler: function() {
