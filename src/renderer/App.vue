@@ -10,10 +10,10 @@ import Logout from './Logout';
 
 export default {
   components: { Login, Logout },
-  props: [ 'isLoggedIn', 'appLoginHandler', 'appLogoutHandler' ],
+  props: [ 'isLoggedIn' ],
   methods: {
-    loginHandler: function() {   this.$emit('login') },
-    logoutHandler: function() {   this.$emit('logout') },
+    loginHandler: function() { this.$emit('login') },
+    logoutHandler: function() { this.$emit('logout') },
   }
 }
 </script>
