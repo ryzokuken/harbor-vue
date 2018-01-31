@@ -2,6 +2,8 @@
   "extends": "airbnb-base",
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "peerDependencies": false }],
-    "no-console": 0
+    "no-console": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0
   }
 }
