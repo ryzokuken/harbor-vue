@@ -14,16 +14,16 @@ const vm = new Vue({
   template,
   data: {
     isLoggedIn: false,
-    username: undefined
+    username: undefined,
   },
   methods: {
-    loginHandler: function(data) {
+    loginHandler(data) {
       ipcRenderer.send('login', data);
     },
-    logoutHandler: function() {
+    logoutHandler() {
       ipcRenderer.send('logout', this.username);
-    }
-  }
+    },
+  },
 });
 
 ipcRenderer.on('logged-in', (event, username) => {
