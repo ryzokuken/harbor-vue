@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  font-family: sans-serif;
 }
 
 div {
@@ -34,4 +35,9 @@ button {
 button:hover {
   color: white;
   background: black;
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: 400;
 }
