@@ -1,5 +1,3 @@
-'use strict';
-
 import { app, BrowserWindow, ipcMain } from 'electron';
 import Cyberoam from 'cyberoam';
 
@@ -60,6 +58,10 @@ app.on('ready', () => {
   mainWindow = createMainWindow();
 });
 
+function live(username, callback) {
+  cyberoam.checkLiveStatus(username).catch(callback);
+}
+
 function login(username, password) {
   cyberoam
     .login(username, password)
@@ -71,20 +73,16 @@ function login(username, password) {
       }, 180 * 1000);
       mainWindow.webContents.send('logged-in', username);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
     });
-}
-
-function live(username, callback) {
-  cyberoam.checkLiveStatus(username).catch(callback);
 }
 
 function logout(username) {
   cyberoam
     .logout(username)
     .then(() => {
-      if (liveInterval != undefined) {
+      if (liveInterval !== undefined) {
         clearInterval(liveInterval);
         liveInterval = undefined;
         mainWindow.webContents.send('logged-out');
@@ -92,7 +90,7 @@ function logout(username) {
         throw Error('Live interval not properly set');
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
     });
 }
