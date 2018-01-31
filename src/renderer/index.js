@@ -14,14 +14,14 @@ const vm = new Vue({
   template,
   data: {
     isLoggedIn: false,
-    username: ''
+    username: undefined
   },
   methods: {
     loginHandler: function(data) {
       ipcRenderer.send('login', data);
     },
     logoutHandler: function() {
-      this.isLoggedIn = false;
+      ipcRenderer.send('logout', this.username);
     }
   }
 });
@@ -29,4 +29,13 @@ const vm = new Vue({
 ipcRenderer.on('logged-in', (event, username) => {
   vm.isLoggedIn = true;
   vm.username = username;
+});
+
+ipcRenderer.on('logged-out', () => {
+  if (vm.username) {
+    vm.isLoggedIn = false;
+    vm.username = undefined;
+  } else {
+    throw Error('Username not properly set');
+  }
 });

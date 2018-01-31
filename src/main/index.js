@@ -80,4 +80,23 @@ function live(username, callback) {
   cyberoam.checkLiveStatus(username).catch(callback);
 }
 
+function logout(username) {
+  cyberoam
+    .logout(username)
+    .then(() => {
+      if (liveInterval != undefined) {
+        clearInterval(liveInterval);
+        liveInterval = undefined;
+        mainWindow.webContents.send('logged-out');
+      } else {
+        throw Error('Live interval not properly set');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
 ipcMain.on('login', (event, { username, password }) => login(username, password));
+
+ipcMain.on('logout', (event, username) => logout(username));
